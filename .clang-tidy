@@ -1,0 +1,98 @@
+Checks: >
+  -*,
+  -bugprone-easily-swappable-parameters
+  bugprone-*,
+  cert-*,
+  clang-analyzer-*,
+  cppcoreguidelines-pro-type-cstyle-cast,
+  google-readability-casting
+  modernize-*,
+  portability-*,
+  readability-avoid-bad-function,
+  readability-avoid-magic-numbers,
+  readability-braces-around-statements,
+  readability-else-after-return,
+  readability-function-cognitive-complexity,
+  readability-function-size,
+  readability-identifier-naming,
+  readability-misleading-indentation,
+  readability-simplify-boolean-expr,
+
+WarningsAsErrors: ''
+HeaderFilterRegex: '.*'
+FormatStyle: file
+
+CheckOptions:
+
+  # =======================================================================
+  # FUNCTION NAMING
+  # =======================================================================
+  - key: readability-identifier-naming.GlobalFunctionCase
+    value: lower_case
+
+  - key: readability-identifier-naming.FunctionCase
+    value: lower_case
+
+  # =======================================================================
+  # VARIABLE NAMING
+  # =======================================================================
+  - key: readability-identifier-naming.GlobalVariableCase
+    value: lower_case
+
+  - key: readability-identifier-naming.StaticVariableCase
+    value: lower_case
+
+  - key: readability-identifier-naming.StaticConstantCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.ParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.LocalVariableCase
+    value: lower_case
+
+  # =======================================================================
+  # CONSTANT NAMING
+  # =======================================================================
+  - key: readability-identifier-naming.GlobalConstantCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.ConstantCase
+    value: UPPER_CASE
+
+  - key: readability-identifier-naming.LocalConstantCase
+    value: lower_case
+
+  - key: readability-identifier-naming.ConstantParameterCase
+    value: lower_case
+  - key: readability-identifier-naming.ConstantPointerParameterCase
+    value: lower_case
+
+  # =======================================================================
+  # STRUCT NAMING
+  # =======================================================================
+  - key: readability-identifier-naming.StructCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.MemberCase
+    value: lower_case
+
+  # =======================================================================
+  # ENUM NAMING
+  # =======================================================================
+  - key: readability-identifier-naming.EnumCase
+    value: CamelCase
+
+  - key: readability-identifier-naming.EnumConstantCase
+    value: UPPER_CASE
+
+  # =======================================================================
+  # TYPEDEF NAMING
+  # =======================================================================
+  - key: readability-identifier-naming.TypedefCase
+    value: CamelCase
+
+  # =======================================================================
+  # MACRO NAMING
+  # =======================================================================
+  - key: readability-identifier-naming.MacroDefinitionCase
+    value: ALL_CAPS

@@ -1,0 +1,19 @@
+SortIncludes: false  # Can break opengl
+
+ColumnLimit: 80
+
+IndentWidth: 8
+TabWidth: 8
+
+AllowShortFunctionsOnASingleLine: None
+BreakBeforeBraces: Custom
+BraceWrapping:
+  AfterFunction: false
+
+AlignConsecutiveDeclarations: false
+AlignConsecutiveAssignments: false
+AlignTrailingComments: true
+
+DerivePointerAlignment: false
+PointerAlignment: Right
+
