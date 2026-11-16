@@ -1,8 +1,7 @@
 #!/bin/sh
 
 gcc \
-main.c makaw.h makaw.c mkwcore.h mkwcore.c \
-./vendor/include/glad/glad.h \
+main.c makaw.c mkwcore.c \
 ./vendor/src/glad.c \
 \
 -o app \
@@ -14,4 +13,7 @@ main.c makaw.h makaw.c mkwcore.h mkwcore.c \
 -lpthread \
 -lXrandr \
 -lXi \
--ldl
+-ldl \
+-Wall -Wextra -Wunused-function
+
+./app

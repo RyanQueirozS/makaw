@@ -1,6 +1,5 @@
 #include "makaw.h"
 #include "mkwtypes.h"
-#include <stdio.h>
 
 int main(void) {
         if (!makaw_init()) {
@@ -9,10 +8,10 @@ int main(void) {
 
         while (makaw_is_running()) {
                 makaw_clear();
-                // makaw_draw_triangle(MAKAW_VEC2(-0.5, -0.5),
-                //                     MAKAW_VEC2(0.5, -0.5), MAKAW_VEC2(0,
-                //                     0.5));
-                makaw_draw_square(MAKAW_VEC2(-0.5, 0.5), 1, 1);
+                makaw_draw_triangle((MakawVec2){-1, -0.5},
+                                    (MakawVec2){0, -0.5}, (MakawVec2){-0.5,
+					0.5});
+                makaw_draw_square((MakawSquare){(MakawVec2){-0.5, 0.5}, 1, 1});
                 makaw_present();
         }
 
