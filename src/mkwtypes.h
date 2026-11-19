@@ -1,6 +1,16 @@
 #ifndef MAKAW_TYPES_H
 #define MAKAW_TYPES_H
 
+typedef enum MakawStatus {
+        MAKAW_FAILURE = 0,
+        MAKAW_SUCCESS = 1,
+} MakawStatus;
+
+enum MakawShaderType {
+        MAKAW_SHADER_VERTEX,
+        MAKAW_SHADER_FRAGMENT,
+};
+
 typedef struct {
         float x, y;
 } MakawVec2;
@@ -15,18 +25,8 @@ typedef struct {
         }
 
 typedef struct MakawSquare {
-        MakawVec2 position_top_left_vertex;
-        float width_left_to_right, height_top_to_bottom;
+        MakawVec2 position_center;
+        float width_x, height_y, depth_z;
 } MakawSquare;
-
-enum MakawShaderType {
-        MAKAW_SHADER_VERTEX,
-        MAKAW_SHADER_FRAGMENT,
-};
-
-typedef enum MakawStatus {
-        MAKAW_FAILURE = 0,
-        MAKAW_SUCCESS = 1,
-} MakawStatus;
 
 #endif // MAKAW_TYPES_H

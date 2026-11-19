@@ -8,10 +8,11 @@ int main(void) {
 
         while (makaw_is_running()) {
                 makaw_clear();
-                makaw_draw_triangle((MakawVec2){-1, -0.5},
-                                    (MakawVec2){0, -0.5}, (MakawVec2){-0.5,
-					0.5});
-                makaw_draw_square((MakawSquare){(MakawVec2){-0.5, 0.5}, 1, 1});
+                /* makaw_draw_triangle((MakawVec2){-1, -0.5}, */
+                /*                     (MakawVec2){0, -0.5}, (MakawVec2){-0.5,
+                 */
+                /* 			0.5}); */
+                makaw_draw_square((MakawSquare){(MakawVec2){0, 0}, 1, 1, 0});
                 makaw_present();
         }
 

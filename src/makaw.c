@@ -119,33 +119,26 @@ void makaw_draw_triangle(MakawVec2 vertex_a, MakawVec2 vertex_b,
         glBufferSubData(GL_ARRAY_BUFFER, vbo_current_count * sizeof(MakawVec3),
                         sizeof(vertices), &vertices);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, ibo_current_count * sizeof(uint32_t),
-                        sizeof(indices), &indices);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,
+                        ibo_current_count * sizeof(uint32_t), sizeof(indices),
+                        &indices);
         vbo_current_count += sizeof(vertices) / sizeof(vertices[0]);
         ibo_current_count += sizeof(indices) / sizeof(indices[0]);
 }
 
 void makaw_draw_square(MakawSquare square) {
-        uint32_t indices[6] = {
-            0 + vbo_current_count, 1 + vbo_current_count,
-            2 + vbo_current_count, // First triangle
-            1 + vbo_current_count, 2 + vbo_current_count,
-            3 + vbo_current_count // Second triangle
-        };
+        float leftmost_x_value = square.position_center.x - square.width_x / 2,
+              topmost_y_value = square.position_center.y - square.height_y / 2;
 
-        float height = square.height_top_to_bottom,
-              width = square.width_left_to_right;
-
-        MakawVec3 top_left =
-            MAKAW_VEC3_TO_VEC2(square.position_top_left_vertex, 0);
-
-        MakawVec3 top_right = mkwmath_vec3_add_scalar(top_left, width, 0, 0);
+        MakawVec3 top_left = {leftmost_x_value, topmost_y_value,
+                              square.depth_z};
+        MakawVec3 top_right =
+            mkwmath_vec3_add(top_left, (MakawVec3){square.width_x, 0, 0});
 
         MakawVec3 bottom_left =
-            mkwmath_vec3_add_scalar(top_left, 0, -height, 0);
-
+            mkwmath_vec3_add(top_left, (MakawVec3){0, square.height_y, 0});
         MakawVec3 bottom_right =
-            mkwmath_vec3_add_scalar(bottom_left, width, 0, 0);
+            mkwmath_vec3_add(bottom_left, (MakawVec3){square.width_x, 0, 0});
 
         MakawVec3 vertices[4] = {
             top_left,
@@ -153,12 +146,21 @@ void makaw_draw_square(MakawSquare square) {
             bottom_left,
             bottom_right,
         };
+
+        uint32_t indices[6] = {
+            0 + vbo_current_count, 1 + vbo_current_count,
+            2 + vbo_current_count, // First triangle
+            1 + vbo_current_count, 2 + vbo_current_count,
+            3 + vbo_current_count // Second triangle
+        };
+
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferSubData(GL_ARRAY_BUFFER, vbo_current_count * sizeof(MakawVec3),
                         sizeof(vertices), &vertices);
         glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
-        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER, ibo_current_count * sizeof(uint32_t),
-                        sizeof(indices), &indices);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,
+                        ibo_current_count * sizeof(uint32_t), sizeof(indices),
+                        &indices);
         vbo_current_count += sizeof(vertices) / sizeof(vertices[0]);
         ibo_current_count += sizeof(indices) / sizeof(indices[0]);
 }
