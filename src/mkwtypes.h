@@ -24,9 +24,14 @@ typedef struct {
                 (_vec2).x, (_vec2).y, (_z)                                     \
         }
 
-typedef struct MakawSquare {
+typedef struct MakawRectangle {
         MakawVec2 position_center;
         float width_x, height_y, depth_z;
-} MakawSquare;
+} MakawRectangle;
+
+typedef struct MakawCuboid {
+        MakawVec3 position_center;
+        float width_x, height_y, depth_z;
+} MakawCuboid;
 
 #endif // MAKAW_TYPES_H

@@ -126,19 +126,21 @@ void makaw_draw_triangle(MakawVec2 vertex_a, MakawVec2 vertex_b,
         ibo_current_count += sizeof(indices) / sizeof(indices[0]);
 }
 
-void makaw_draw_square(MakawSquare square) {
-        float leftmost_x_value = square.position_center.x - square.width_x / 2,
-              topmost_y_value = square.position_center.y - square.height_y / 2;
+void makaw_draw_rectangle(MakawRectangle rectangle) {
+        float leftmost_x_value =
+                  rectangle.position_center.x - rectangle.width_x / 2,
+              topmost_y_value =
+                  rectangle.position_center.y - rectangle.height_y / 2;
 
         MakawVec3 top_left = {leftmost_x_value, topmost_y_value,
-                              square.depth_z};
+                              rectangle.depth_z};
         MakawVec3 top_right =
-            mkwmath_vec3_add(top_left, (MakawVec3){square.width_x, 0, 0});
+            mkwmath_vec3_add(top_left, (MakawVec3){rectangle.width_x, 0, 0});
 
         MakawVec3 bottom_left =
-            mkwmath_vec3_add(top_left, (MakawVec3){0, square.height_y, 0});
+            mkwmath_vec3_add(top_left, (MakawVec3){0, rectangle.height_y, 0});
         MakawVec3 bottom_right =
-            mkwmath_vec3_add(bottom_left, (MakawVec3){square.width_x, 0, 0});
+            mkwmath_vec3_add(bottom_left, (MakawVec3){rectangle.width_x, 0, 0});
 
         MakawVec3 vertices[4] = {
             top_left,
@@ -153,6 +155,55 @@ void makaw_draw_square(MakawSquare square) {
             1 + vbo_current_count, 2 + vbo_current_count,
             3 + vbo_current_count // Second triangle
         };
+
+        glBindBuffer(GL_ARRAY_BUFFER, vbo);
+        glBufferSubData(GL_ARRAY_BUFFER, vbo_current_count * sizeof(MakawVec3),
+                        sizeof(vertices), &vertices);
+        glBindBuffer(GL_ELEMENT_ARRAY_BUFFER, ibo);
+        glBufferSubData(GL_ELEMENT_ARRAY_BUFFER,
+                        ibo_current_count * sizeof(uint32_t), sizeof(indices),
+                        &indices);
+        vbo_current_count += sizeof(vertices) / sizeof(vertices[0]);
+        ibo_current_count += sizeof(indices) / sizeof(indices[0]);
+}
+
+void makaw_draw_cuboid(MakawCuboid cuboid) {
+        float leftmost_x = cuboid.position_center.x - cuboid.width_x / 2;
+        float rightmost_x = leftmost_x + cuboid.width_x;
+
+        float highest_y = cuboid.position_center.y - cuboid.height_y / 2;
+        float lowest_y = highest_y + cuboid.height_y;
+
+        float furthest_z = cuboid.position_center.z + cuboid.depth_z / 2;
+        float closest_z = furthest_z - cuboid.depth_z;
+
+        MakawVec3 vertices[8] = {
+            (MakawVec3){leftmost_x, highest_y, furthest_z},  // back top left
+            (MakawVec3){rightmost_x, highest_y, furthest_z}, // back top right
+            (MakawVec3){leftmost_x, lowest_y, furthest_z},   // back bottom left
+            (MakawVec3){rightmost_x, lowest_y, furthest_z}, // back bottom right
+
+            (MakawVec3){leftmost_x, highest_y, closest_z},  // front top left
+            (MakawVec3){rightmost_x, highest_y, closest_z}, // front top right
+            (MakawVec3){leftmost_x, lowest_y, closest_z},   // front bottom left
+            (MakawVec3){rightmost_x, lowest_y, closest_z}, // front bottom right
+        };
+
+        uint32_t indices[36] = {// Back face
+                                0, 1, 2, 1, 2, 3,
+                                // Front face
+                                4, 5, 6, 4, 6, 7,
+                                // Top face
+                                0, 1, 4, 1, 4, 5,
+                                // Bottom face
+                                2, 3, 6, 3, 6, 7,
+                                // Left face
+                                0, 2, 4, 2, 4, 6,
+                                // Right face
+                                1, 3, 5, 3, 5, 7};
+        for (size_t i = 0; i < 36; ++i) {
+                indices[i] += vbo_current_count;
+        }
 
         glBindBuffer(GL_ARRAY_BUFFER, vbo);
         glBufferSubData(GL_ARRAY_BUFFER, vbo_current_count * sizeof(MakawVec3),
